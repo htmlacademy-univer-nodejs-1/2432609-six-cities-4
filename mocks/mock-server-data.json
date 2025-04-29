@@ -1,0 +1,93 @@
+{
+  "api": {
+    "titles": [
+      "Уютная квартира в центре Парижа",
+      "Современный дом в Амстердаме",
+      "Студия с видом на реку в Кёльне",
+      "Просторный лофт в Брюсселе",
+      "Комната в старинном доме в Дюссельдорфе",
+      "Отельный номер в центре Гамбурга"
+    ],
+    "descriptions": [
+      "Квартира с современным ремонтом и балконом, расположенная рядом с метро и магазинами.",
+      "Семейный дом с садом и террасой в зелёном районе города.",
+      "Небольшая студия с видом на реку и всем необходимым для комфортной жизни.",
+      "Лофт с дизайнерским интерьером, высокими потолками и панорамными окнами.",
+      "Атмосферная комната в историческом здании с уютной обстановкой.",
+      "Комфортный отельный номер с полным обслуживанием в центре города."
+    ],
+    "cities": [
+      "Paris",
+      "Amsterdam",
+      "Cologne",
+      "Brussels",
+      "Dusseldorf",
+      "Hamburg"
+    ],
+    "previewImages": [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "https://images.unsplash.com/photo-1572120360610-d971b9b78827",
+      "https://images.unsplash.com/photo-1586105251261-72a756497a12",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914",
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227",
+      "https://images.unsplash.com/photo-1560448075-bb4c3b88e4b1"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "https://images.unsplash.com/photo-1572120360610-d971b9b78827",
+      "https://images.unsplash.com/photo-1586105251261-72a756497a12",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914",
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227",
+      "https://images.unsplash.com/photo-1560448075-bb4c3b88e4b1"
+    ],
+    "apartmentTypes": [
+      "apartment",
+      "house",
+      "room",
+      "hotel"
+    ],
+    "amenities": [
+      "Wi-Fi",
+      "Air conditioning",
+      "Washer",
+      "Towels",
+      "Fridge",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Breakfast"
+    ],
+    "userNames": [
+      "Иван Иванов",
+      "Мария Смирнова",
+      "Анна Каренина",
+      "Роланд Дискейн",
+      "Холи Гибни"
+    ],
+    "emails": [
+      "ivan@example.com",
+      "maria@example.com",
+      "anna@example.com",
+      "roland@example.com",
+      "holly@example.com"
+    ],
+    "avatarImages": [
+      "https://randomuser.me/api/portraits/men/1.jpg",
+      "https://randomuser.me/api/portraits/women/2.jpg",
+      "https://randomuser.me/api/portraits/women/3.jpg",
+      "https://randomuser.me/api/portraits/men/4.jpg",
+      "https://randomuser.me/api/portraits/men/5.jpg"
+    ],
+    "userTypes": [
+      "base",
+      "pro"
+    ],
+    "coordinates": [
+      [48.85661, 2.351499],
+      [52.370216, 4.895168],
+      [50.938361, 6.959974],
+      [50.846557, 4.351697],
+      [51.225402, 6.776314],
+      [53.550341, 10.000654]
+    ]
+  }
+}
