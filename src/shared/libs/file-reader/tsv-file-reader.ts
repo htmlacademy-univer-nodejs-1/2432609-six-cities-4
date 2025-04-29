@@ -1,66 +1,38 @@
-import {readFileSync} from 'node:fs';
+import EventEmitter from 'node:events';
+import { createReadStream } from 'node:fs';
+import { FileReader } from './file-reader.interface.js';
 
-import {FileReader} from './file-reader.interface.js';
-import {Offer} from '../../types/offer.js';
-import {City} from '../../types/city.js';
-import {ApartmentType} from '../../types/apartment.js';
-import {Amenity} from '../../types/amenity.js';
+const CHUNK_SIZE = 16 * 1024; // 16KB
 
-export class TsvFileReader implements FileReader{
-  private rawData = '';
-
+export class TsvFileReader extends EventEmitter implements FileReader {
   constructor(private readonly filename: string) {
+    super();
   }
 
-  public read(): void {
-    this.rawData = readFileSync(this.filename, 'utf-8');
-  }
+  public async read(): Promise<void> {
+    const stream = createReadStream(this.filename, {
+      highWaterMark: CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
 
-  public toArray(): Offer[] {
-    if(!this.rawData) {
-      throw new Error('File was not read');
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of stream) {
+      remainingData += chunk.toString();
+      nextLinePosition = remainingData.indexOf('\n');
+
+      while (nextLinePosition >= 0) {
+        const row = remainingData.slice(0, nextLinePosition);
+        remainingData = remainingData.slice(nextLinePosition + 1);
+        importedRowCount++;
+
+        this.emit('line', row);
+        nextLinePosition = remainingData.indexOf('\n');
+      }
     }
 
-    return this.rawData
-      .split('\n')
-      .filter((row) => row.trim().length > 0)
-      .map((line) => line.split('\t'))
-      .map(([
-        title,
-        description,
-        date,
-        city,
-        previewPath,
-        imagePaths,
-        isPremium,
-        isFavorite,
-        rating,
-        apartmentType,
-        roomCount,
-        guestCount,
-        cost,
-        amenity,
-        user,
-        commentCount,
-        coordinates
-      ]) => ({
-        title,
-        description,
-        date: new Date(date),
-        city: City[city as 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf'],
-        previewPath,
-        imagePaths: imagePaths.split(';'),
-        isPremium: isPremium === 'true',
-        isFavorite: isFavorite === 'true',
-        rating: Number(rating),
-        apartmentType: ApartmentType[apartmentType as 'Apartment' | 'House' | 'Room' | 'Hotel' ],
-        roomCount: Number(roomCount),
-        guestCount: Number(guestCount),
-        cost: Number(cost),
-        amenity: amenity as Amenity,
-        user,
-        commentCount: Number(commentCount),
-        coordinates: coordinates.split(';').map(Number) as [number, number]
-      }));
+    this.emit('end', importedRowCount);
   }
 }
