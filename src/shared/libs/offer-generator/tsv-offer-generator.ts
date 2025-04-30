@@ -43,15 +43,19 @@ export class TsvOfferGenerator implements OfferGenerator {
     const imagePaths = getRandomItems(this.mockData.images).join(';');
     const isPremium = this.generateRandomBoolean();
     const isFavorite = this.generateRandomBoolean();
-    const rating = generateRandomValue(1, 5, 1); // 1 знак после запятой
+    const rating = generateRandomValue(1, 5, 1);
     const apartmentType = getRandomItem(this.mockData.apartmentTypes);
     const roomCount = generateRandomValue(ROOM_COUNT_RANGE.MIN, ROOM_COUNT_RANGE.MAX);
     const guestCount = generateRandomValue(GUEST_COUNT_RANGE.MIN, GUEST_COUNT_RANGE.MAX);
     const cost = generateRandomValue(PRICE_RANGE.MIN, PRICE_RANGE.MAX);
     const amenities = getRandomItems(this.mockData.amenities).join(';');
+
     const userName = getRandomItem(this.mockData.userNames);
+    const userEmail = getRandomItem(this.mockData.emails);
+    const avatarPath = getRandomItem(this.mockData.avatarImages);
+
     const commentCount = 0;
-    const coordinates = getRandomItem(this.mockData.coordinates).join(';');
+    const [latitude, longitude] = getRandomItem(this.mockData.coordinates);
 
     return [
       title,
@@ -69,8 +73,11 @@ export class TsvOfferGenerator implements OfferGenerator {
       cost,
       amenities,
       userName,
+      userEmail,
+      avatarPath,
       commentCount,
-      coordinates
+      latitude,
+      longitude
     ].join('\t');
   }
 }

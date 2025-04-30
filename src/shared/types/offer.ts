@@ -1,6 +1,7 @@
 import { Amenity } from './amenity.js';
 import { ApartmentType } from './apartment.js';
 import { City } from './city.js';
+import { User } from './user.js';
 
 export type Offer = {
   title: string;
@@ -17,7 +18,8 @@ export type Offer = {
   guestCount: number;
   cost: number;
   amenity: Amenity[];
-  user: string;
+  author: User;
   commentCount: number;
-  coordinates: [number, number];
+  latitude: number;
+  longitude: number;
 };
