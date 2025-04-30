@@ -16,17 +16,20 @@ export function createOffer(offerData: string): Offer {
     guestCount,
     cost,
     amenities,
+    userName,
     userEmail,
+    avatarPath,
     commentCount,
-    coordinates,
+    latitude,
+    longitude
   ] = offerData.replace('\n', '').split('\t');
 
   return {
-    title: title,
-    description: description,
+    title,
+    description,
     date: new Date(date),
     city: city as City,
-    previewPath: previewPath,
+    previewPath,
     imagePaths: imagePaths.split(';'),
     isPremium: isPremium === 'true',
     isFavorite: isFavorite === 'true',
@@ -35,9 +38,17 @@ export function createOffer(offerData: string): Offer {
     roomCount: Number(roomCount),
     guestCount: Number(guestCount),
     cost: Number(cost),
-    amenity: amenities.split(';') as Amenity[],
-    user: userEmail,
+    amenity: amenities
+      .split(';')
+      .map((item) => item.trim())
+      .filter((item): item is Amenity => item !== '') as Amenity[],
+    author: {
+      name: userName,
+      email: userEmail,
+      avatarPath,
+    },
     commentCount: Number(commentCount),
-    coordinates: coordinates.split(';').map(Number) as [number, number],
+    latitude: Number(latitude),
+    longitude: Number(longitude),
   };
 }

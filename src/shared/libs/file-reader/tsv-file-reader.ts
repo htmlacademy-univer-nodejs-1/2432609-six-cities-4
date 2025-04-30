@@ -24,11 +24,14 @@ export class TsvFileReader extends EventEmitter implements FileReader {
       nextLinePosition = remainingData.indexOf('\n');
 
       while (nextLinePosition >= 0) {
-        const row = remainingData.slice(0, nextLinePosition);
+        const completeRow = remainingData.slice(0, nextLinePosition);
         remainingData = remainingData.slice(nextLinePosition + 1);
         importedRowCount++;
 
-        this.emit('line', row);
+        await new Promise((resolve) => {
+          this.emit('line', completeRow, resolve);
+        });
+
         nextLinePosition = remainingData.indexOf('\n');
       }
     }

@@ -1,12 +1,6 @@
-export enum UserType {
-  Base = 'base',
-  Pro = 'pro',
-}
-
 export type User = {
-  userName: string;
+  name: string;
   email: string;
   avatarPath?: string;
-  password: string;
-  type: UserType;
+  password?: string;
 };
