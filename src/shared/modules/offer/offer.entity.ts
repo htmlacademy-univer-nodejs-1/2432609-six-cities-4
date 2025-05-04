@@ -6,7 +6,7 @@ import {
   Ref,
 } from '@typegoose/typegoose';
 import { UserEntity } from '../user/index.js';
-import { City, ApartmentType, Amenity } from '../../types/index.js';
+import { City, ApartmentType, Amenities } from '../../types/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface OfferEntity extends defaultClasses.Base {}
@@ -29,7 +29,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   public previewPath!: string;
 
   @prop({ type: () => [String] })
-  public imagePaths!: string[];
+  public images!: string[];
 
   @prop({ required: true })
   public date!: Date;
@@ -58,8 +58,8 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true })
   public cost!: number;
 
-  @prop({ type: () => [String], enum: Amenity })
-  public amenity!: Amenity[];
+  @prop({ type: () => [String], enum: Amenities })
+  public amenities!: Amenities[];
 
   @prop({ required: true })
   public latitude!: number;

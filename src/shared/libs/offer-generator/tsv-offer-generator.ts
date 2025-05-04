@@ -40,7 +40,7 @@ export class TsvOfferGenerator implements OfferGenerator {
     const date = this.generateRandomDate();
     const city = getRandomItem(this.mockData.cities);
     const previewPath = getRandomItem(this.mockData.previewImages);
-    const imagePaths = getRandomItems(this.mockData.images).join(';');
+    const images = getRandomItems(this.mockData.images).join(';');
     const isPremium = this.generateRandomBoolean();
     const isFavorite = this.generateRandomBoolean();
     const rating = generateRandomValue(1, 5, 1);
@@ -63,7 +63,7 @@ export class TsvOfferGenerator implements OfferGenerator {
       date,
       city,
       previewPath,
-      imagePaths,
+      images,
       isPremium,
       isFavorite,
       rating,
