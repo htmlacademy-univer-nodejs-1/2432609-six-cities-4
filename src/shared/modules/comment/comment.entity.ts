@@ -8,8 +8,6 @@ import {
 import { OfferEntity } from '../offer/index.js';
 import { UserEntity } from '../user/index.js';
 
-export interface CommentEntity extends defaultClasses.Base {}
-
 @modelOptions({
   schemaOptions: {
     collection: 'comments',
