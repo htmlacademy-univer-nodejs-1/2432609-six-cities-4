@@ -1,4 +1,4 @@
-import { Amenity } from './amenity.js';
+import { Amenities } from './amenities.js';
 import { ApartmentType } from './apartment.js';
 import { City } from './city.js';
 import { User } from './user.js';
@@ -9,7 +9,7 @@ export type Offer = {
   date: Date;
   city: City;
   previewPath: string;
-  imagePaths: string[];
+  images: string[];
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;
@@ -17,7 +17,7 @@ export type Offer = {
   roomCount: number;
   guestCount: number;
   cost: number;
-  amenity: Amenity[];
+  amenities: Amenities[];
   author: User;
   commentCount: number;
   latitude: number;

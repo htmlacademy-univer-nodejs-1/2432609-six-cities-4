@@ -1,6 +1,6 @@
 import { City } from '../../../types/city.js';
 import { ApartmentType } from '../../../types/apartment.js';
-import { Amenity } from '../../../types/amenity.js';
+import { Amenities } from '../../../types/amenities.js';
 
 export class CreateOfferDto {
   public title!: string;
@@ -8,7 +8,7 @@ export class CreateOfferDto {
   public date!: Date;
   public city!: City;
   public previewPath!: string;
-  public imagePaths!: string[];
+  public images!: string[];
   public isPremium!: boolean;
   public isFavorite!: boolean;
   public rating!: number;
@@ -16,7 +16,7 @@ export class CreateOfferDto {
   public roomCount!: number;
   public guestCount!: number;
   public cost!: number;
-  public amenity!: Amenity[];
+  public amenities!: Amenities[];
   public author!: string;
   public latitude!: number;
   public longitude!: number;

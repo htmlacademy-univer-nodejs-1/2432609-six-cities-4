@@ -1,11 +1,15 @@
+import { City } from './city.js';
+import { ApartmentType } from './apartment.js';
+import { Amenities } from './amenities.js';
+
 export type MockServerData = {
   titles: string[];
   descriptions: string[];
-  cities: string[];
+  cities: City[];
   previewImages: string[];
   images: string[];
-  apartmentTypes: string[];
-  amenities: string[];
+  apartmentTypes: ApartmentType[];
+  amenities: Amenities[];
   userNames: string[];
   emails: string[];
   avatarImages: string[];

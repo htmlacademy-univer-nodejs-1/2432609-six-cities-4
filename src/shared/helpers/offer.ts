@@ -1,4 +1,4 @@
-import { Offer, City, ApartmentType, Amenity } from '../types/index.js';
+import { Offer, City, ApartmentType, Amenities } from '../types/index.js';
 
 export function createOffer(offerData: string): Offer {
   const [
@@ -7,7 +7,7 @@ export function createOffer(offerData: string): Offer {
     date,
     city,
     previewPath,
-    imagePaths,
+    images,
     isPremium,
     isFavorite,
     rating,
@@ -30,7 +30,7 @@ export function createOffer(offerData: string): Offer {
     date: new Date(date),
     city: city as City,
     previewPath,
-    imagePaths: imagePaths.split(';'),
+    images: images.split(';'),
     isPremium: isPremium === 'true',
     isFavorite: isFavorite === 'true',
     rating: parseFloat(rating),
@@ -38,10 +38,10 @@ export function createOffer(offerData: string): Offer {
     roomCount: Number(roomCount),
     guestCount: Number(guestCount),
     cost: Number(cost),
-    amenity: amenities
+    amenities: amenities
       .split(';')
       .map((item) => item.trim())
-      .filter((item): item is Amenity => item !== '') as Amenity[],
+      .filter((item): item is Amenities => item !== '') as Amenities[],
     author: {
       name: userName,
       email: userEmail,

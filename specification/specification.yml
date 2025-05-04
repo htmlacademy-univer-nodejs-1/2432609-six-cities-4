@@ -56,11 +56,11 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: keks@htmlacademy.ru
+                  example: "keks@htmlacademy.ru"
 
                 password:
                   type: string
-                  example: 12345678
+                  example: "12345678"
 
               required:
                 - email
@@ -75,7 +75,7 @@ paths:
                 properties:
                   token:
                     type: string
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+                    example: "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9"
         '401':
           description: Неверный логин или пароль.
         '404':
@@ -466,16 +466,16 @@ components:
           type: string
           example: Big house in the center of the city with all amenities
 
-        previewImage:
+        previewPath:
           type: string
           example: image.jpg
 
-        postDate:
+        date:
           type: string
           format: date
           example: 2025-02-12
 
-        price:
+        cost:
           type: number
           example: 180
 
@@ -498,20 +498,20 @@ components:
           type: boolean
           example: true
 
-        rate:
+        rating:
           type: number
           example: 3.8
 
-        type:
+        apartmentType:
           type: string
           enum: [apartment, house, room, hotel]
           example: apartment
 
-        bedrooms:
+        roomCount:
           type: integer
           example: 2
 
-        maxAdults:
+        guestCount:
           type: integer
           example: 4
 
@@ -531,7 +531,7 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        host:
+        author:
           type: string
           example: 6329c3d6a04ab1061c6425ea
 
@@ -562,16 +562,16 @@ components:
           type: string
           example: Big house in the center of the city with all amenities
 
-        previewImage:
+        previewPath:
           type: string
           example: image.jpg
 
-        postDate:
+        date:
           type: string
           format: date
           example: 2025-02-12
 
-        price:
+        cost:
           type: number
           example: 180
 
@@ -594,20 +594,20 @@ components:
           type: boolean
           example: true
 
-        rate:
+        rating:
           type: number
           example: 3.8
 
-        type:
+        apartmentType:
           type: string
           enum: [apartment, house, room, hotel]
           example: apartment
 
-        bedrooms:
+        roomCount:
           type: integer
           example: 2
 
-        maxAdults:
+        guestCount:
           type: integer
           example: 4
 
@@ -627,7 +627,7 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        host:
+        author:
           type: string
           example: 6329c3d6a04ab1061c6425ea
 
@@ -652,7 +652,7 @@ components:
           minLength: 5
           maxLength: 1024
 
-        postDate:
+        date:
           type: string
           format: date
           example: 2025-02-12
@@ -679,7 +679,7 @@ components:
           minLength: 5
           maxLength: 1024
 
-        postDate:
+        date:
           type: string
           format: date
           example: 2025-02-12
