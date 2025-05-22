@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import {
   defaultClasses,
   getModelForClass,
@@ -19,13 +20,13 @@ export interface UserEntity extends defaultClasses.Base {}
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class UserEntity extends defaultClasses.TimeStamps {
   @prop({ required: true })
-  public name!: string;
+  public name: string = '';
 
   @prop({ required: true, unique: true })
-  public email!: string;
+  public email: string = '';
 
   @prop({ required: false, default: '' })
-  public avatarPath?: string;
+  public avatarPath?: string = '';
 
   @prop()
   private password?: string;
@@ -45,5 +46,8 @@ export class UserEntity extends defaultClasses.TimeStamps {
     return this.password;
   }
 }
+
+console.log('>>> name type:', Reflect.getMetadata('design:type', UserEntity.prototype, 'name'));
+console.log('>>> email type:', Reflect.getMetadata('design:type', UserEntity.prototype, 'email'));
 
 export const UserModel = getModelForClass(UserEntity);

@@ -46,6 +46,7 @@ export function createOffer(offerData: string): Offer {
       name: userName,
       email: userEmail,
       avatarPath,
+      password: 'test123'
     },
     commentCount: Number(commentCount),
     latitude: Number(latitude),
