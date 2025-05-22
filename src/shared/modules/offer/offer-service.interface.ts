@@ -3,8 +3,9 @@ import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { City } from '../../types/index.js';
+import { DocumentExists } from '../../types/index.js';
 
-export interface OfferService {
+export interface OfferService extends DocumentExists {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
   findAll(count?: number, userId?: string): Promise<DocumentType<OfferEntity>[]>;
   findById(offerId: string, userId?: string): Promise<DocumentType<OfferEntity> | null>;

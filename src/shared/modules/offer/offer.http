@@ -79,3 +79,12 @@ Authorization: Bearer {{jwt-token}}
 ## Удалить предложение из избранного
 DELETE http://localhost:4000/offers/6329c3d6a04ab1061c6425ef/favorite HTTP/1.1
 Authorization: Bearer {{jwt-token}}
+
+###
+
+## Список комментариев к объявлению
+GET http://localhost:4000/offers/628a27d729c45f2bf9f6806a/comments HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{jwt-token}}
+
+###

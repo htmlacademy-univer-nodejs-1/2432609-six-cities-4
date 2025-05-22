@@ -6,6 +6,7 @@ import {
   BaseController,
   HttpError,
   HttpMethod,
+  ValidateDtoMiddleware,
 } from '../../libs/rest/index.js';
 
 import { Logger } from '../../libs/logger/index.js';
@@ -16,6 +17,8 @@ import { UserService } from './user-service.interface.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { LoginUserDto } from './dto/login-user.dto.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -30,13 +33,15 @@ export class UserController extends BaseController {
     this.addRoute({
       path: '/register',
       method: HttpMethod.Post,
-      handler: this.create
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
     });
 
     this.addRoute({
       path: '/login',
       method: HttpMethod.Post,
-      handler: this.login
+      handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
     });
 
     this.addRoute({
