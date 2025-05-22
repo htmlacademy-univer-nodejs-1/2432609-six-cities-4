@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import {
@@ -38,6 +38,19 @@ export class UserController extends BaseController {
       method: HttpMethod.Post,
       handler: this.login
     });
+
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Get,
+      handler: this.checkAuth
+    });
+
+    this.addRoute({
+      path: '/logout',
+      method: HttpMethod.Post,
+      handler: this.logout
+    });
+    this.logger.info('UserController routes registered');
   }
 
   public async create(
@@ -69,7 +82,7 @@ export class UserController extends BaseController {
 
   public async login(
     { body }: LoginUserRequest,
-    _res: Response,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
@@ -83,9 +96,30 @@ export class UserController extends BaseController {
         );
       }
 
-      this.ok(_res, fillDTO(UserRdo, existsUser));
+      this.ok(res, fillDTO(UserRdo, existsUser));
     } catch (error) {
       return next(error);
     }
   }
+
+  public async checkAuth(_req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      // заглушка, тут будет jwt
+      const mockUser = await this.userService.findByEmail('torans@overlook.net');
+
+      if (!mockUser) {
+        throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
+      }
+
+      this.ok(res, fillDTO(UserRdo, mockUser));
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+
+  public async logout(_req: Request, res: Response): Promise<void> {
+    this.noContent(res, {});
+  }
+
 }
