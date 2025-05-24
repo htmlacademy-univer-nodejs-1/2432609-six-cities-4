@@ -79,4 +79,6 @@ export class CreateOfferDto {
 
   @IsNumber({}, { message: CreateOfferValidationMessage.longitude.invalidFormat })
   public longitude!: number;
+
+  public userId!: string;
 }

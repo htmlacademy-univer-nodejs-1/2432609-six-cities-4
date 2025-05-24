@@ -21,11 +21,11 @@ Authorization: Bearer {{jwt-token}}
   "isPremium": false,
   "isFavorite": false,
   "rating": 4.5,
-  "apartmentType": "Flat",
+  "apartmentType": "room",
   "roomCount": 2,
   "guestCount": 3,
-  "cost": 80,
-  "amenities": ["Wifi", "Heating"],
+  "cost": 200,
+  "amenities": ["Wi-Fi", "Breakfast"],
   "author": "643c5fbd1b5e6a00122f3c4d",
   "latitude": 52.370216,
   "longitude": 4.895168
@@ -34,25 +34,25 @@ Authorization: Bearer {{jwt-token}}
 ###
 
 ## Получить предложение по ID
-GET http://localhost:4000/offers/6329c3d6a04ab1061c6425ef HTTP/1.1
+GET http://localhost:4000/offers/6817c936c259203919ce24c7 HTTP/1.1
 Accept: application/json
 
 ###
 
 ## Обновить предложение по ID
-PATCH http://localhost:4000/offers/6329c3d6a04ab1061c6425ef HTTP/1.1
+PATCH http://localhost:4000/offers/6817c936c259203919ce24c7 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{jwt-token}}
 
 {
   "title": "Обновленное название квартиры",
-  "cost": 90
+  "cost": 500
 }
 
 ###
 
 ## Удалить предложение по ID
-DELETE http://localhost:4000/offers/6329c3d6a04ab1061c6425ef HTTP/1.1
+DELETE http://localhost:4000/offers/ HTTP/1.1
 Authorization: Bearer {{jwt-token}}
 
 ###
@@ -71,19 +71,19 @@ Accept: application/json
 ###
 
 ## Добавить предложение в избранное
-POST http://localhost:4000/offers/6329c3d6a04ab1061c6425ef/favorite HTTP/1.1
+POST http://localhost:4000/offers/6817c936c259203919ce24c7/favorite HTTP/1.1
 Authorization: Bearer {{jwt-token}}
 
 ###
 
 ## Удалить предложение из избранного
-DELETE http://localhost:4000/offers/6329c3d6a04ab1061c6425ef/favorite HTTP/1.1
+DELETE http://localhost:4000/offers/6817c936c259203919ce24c7/favorite HTTP/1.1
 Authorization: Bearer {{jwt-token}}
 
 ###
 
 ## Список комментариев к объявлению
-GET http://localhost:4000/offers/628a27d729c45f2bf9f6806a/comments HTTP/1.1
+GET http://localhost:4000/offers/6817c936c259203919ce24c7/comments HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{jwt-token}}
 
