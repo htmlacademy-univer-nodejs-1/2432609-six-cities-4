@@ -7,6 +7,9 @@ import {
   HttpError,
   HttpMethod,
   ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
+  DocumentExistsMiddleware,
+  UploadFileMiddleware,
 } from '../../libs/rest/index.js';
 
 import { Logger } from '../../libs/logger/index.js';
@@ -56,6 +59,17 @@ export class UserController extends BaseController {
       handler: this.logout
     });
     this.logger.info('UserController routes registered');
+
+    this.addRoute({
+      path: '/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new DocumentExistsMiddleware(this.userService, 'Пользователь', 'userId'),
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
+      ],
+    });
   }
 
   public async create(
@@ -125,6 +139,16 @@ export class UserController extends BaseController {
 
   public async logout(_req: Request, res: Response): Promise<void> {
     this.noContent(res, {});
+  }
+
+  public async uploadAvatar(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      this.created(res, {
+        filepath: req.file?.path,
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
 
 }
