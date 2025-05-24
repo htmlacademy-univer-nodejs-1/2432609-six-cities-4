@@ -4,7 +4,7 @@ import { CommentRdo, CommentService } from '../comment/index.js';
 import {
   BaseController,
   DocumentExistsMiddleware,
-  HttpMethod,
+  HttpMethod, PrivateRouteMiddleware,
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
@@ -28,17 +28,19 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for OfferController...');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create, middlewares: [new ValidateDtoMiddleware(CreateOfferDto)] });
+    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create, middlewares: [new PrivateRouteMiddleware(), new ValidateDtoMiddleware(CreateOfferDto)] });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.show, middlewares: [
       new ValidateObjectIdMiddleware('offerId'),
       new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
     ]});
     this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.update,middlewares: [
+      new PrivateRouteMiddleware(),
       new ValidateObjectIdMiddleware('offerId'),
       new ValidateDtoMiddleware(UpdateOfferDto),
       new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
     ] });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.delete, middlewares: [
+      new PrivateRouteMiddleware(),
       new ValidateObjectIdMiddleware('offerId'),
       new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
     ] });
@@ -61,8 +63,11 @@ export class OfferController extends BaseController {
 
   public async create(req: Request, res: Response): Promise<void> {
     const dto = req.body as CreateOfferDto;
-    const result = await this.offerService.create(dto);
-    this.created(res, fillDTO(OfferRdo, result));
+    const userId = req.tokenPayload?.id;
+
+    const result = await this.offerService.create({ ...dto, userId });
+    const offer = await this.offerService.findById(result.id, userId);
+    this.created(res, fillDTO(OfferRdo, offer));
   }
 
   public async show(req: Request, res: Response): Promise<void> {

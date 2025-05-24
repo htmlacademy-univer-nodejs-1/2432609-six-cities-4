@@ -22,13 +22,16 @@ import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { LoginUserDto } from './dto/login-user.dto.js';
+import { AuthService } from '../auth/index.js';
+import { LoggedUserRdo } from './rdo/logged-user.rdo.js';
 
 @injectable()
 export class UserController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.UserService) private readonly userService: UserService,
-    @inject(Component.Config) private readonly configService: Config<RestSchema>
+    @inject(Component.Config) private readonly configService: Config<RestSchema>,
+    @inject(Component.AuthService) private readonly authService: AuthService,
   ) {
     super(logger);
     this.logger.info('Register routes for UserController…');
@@ -102,40 +105,29 @@ export class UserController extends BaseController {
   public async login(
     { body }: LoginUserRequest,
     res: Response,
-    next: NextFunction
   ): Promise<void> {
-    try {
-      const existsUser = await this.userService.findByEmail(body.email);
-
-      if (!existsUser) {
-        throw new HttpError(
-          StatusCodes.UNAUTHORIZED,
-          `User with email ${body.email} not found.`,
-          'UserController'
-        );
-      }
-
-      this.ok(res, fillDTO(UserRdo, existsUser));
-    } catch (error) {
-      return next(error);
-    }
+    const user = await this.authService.verify(body);
+    const token = await this.authService.authenticate(user);
+    const responseData = fillDTO(LoggedUserRdo, {
+      email: user.email,
+      token,
+    });
+    this.ok(res, responseData);
   }
 
-  public async checkAuth(_req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      // заглушка, тут будет jwt
-      const mockUser = await this.userService.findByEmail('torans@overlook.net');
+  public async checkAuth({ tokenPayload: { email }}: Request, res: Response) {
+    const foundedUser = await this.userService.findByEmail(email);
 
-      if (!mockUser) {
-        throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
-      }
-
-      this.ok(res, fillDTO(UserRdo, mockUser));
-    } catch (error) {
-      return next(error);
+    if (! foundedUser) {
+      throw new HttpError(
+        StatusCodes.UNAUTHORIZED,
+        'Unauthorized',
+        'UserController'
+      );
     }
-  }
 
+    this.ok(res, fillDTO(LoggedUserRdo, foundedUser));
+  }
 
   public async logout(_req: Request, res: Response): Promise<void> {
     this.noContent(res, {});

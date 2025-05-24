@@ -45,6 +45,11 @@ export class UserEntity extends defaultClasses.TimeStamps {
   public getPassword() {
     return this.password;
   }
+
+  public verifyPassword(password: string, salt: string) {
+    const hashPassword = createSHA256(password, salt);
+    return hashPassword === this.password;
+  }
 }
 
 console.log('>>> name type:', Reflect.getMetadata('design:type', UserEntity.prototype, 'name'));
